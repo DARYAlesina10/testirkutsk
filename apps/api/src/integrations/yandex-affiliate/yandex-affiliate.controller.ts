@@ -17,13 +17,13 @@ export class YandexAffiliateController {
 
   @UseGuards(AdminGuard)
   @Get('/orders')
-  orders() { return this.ordersService.getOrders(); }
+  orders() { return this.ordersService.getOrders({}); }
 
   @UseGuards(AdminGuard)
   @Get('/order')
-  order(@Query('orderId') orderId: string) { return this.ordersService.getOrder(orderId); }
+  order(@Query('orderId') orderId: string) { return this.ordersService.getOrder({ orderId }); }
 
   @UseGuards(AdminGuard)
   @Post('/orders/sync')
-  sync() { return this.ordersService.syncOrders(); }
+  sync() { return this.ordersService.syncOrders({}); }
 }

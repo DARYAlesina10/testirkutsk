@@ -12,6 +12,10 @@ export class DataStore {
   affiliateLinks: any[] = [];
   partnerArticles: any[] = [];
   clicks: any[] = [];
+  affiliateOrders: any[] = [];
+  affiliateOrderItems: any[] = [];
+  affiliateOrderSyncLogs: any[] = [];
+  analytics = { revenue: 0, orders: 0 };
 
   productById(id: string) { const p=this.products.find(x=>x.id===id); if(!p) throw new NotFoundException('Product not found'); return p; }
 }
