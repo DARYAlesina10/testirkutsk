@@ -18,6 +18,7 @@ import { DataStore } from './common/data.store';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     BullModule.forRoot({ connection: { host: 'redis', port: 6379 } }),
+    BullModule.registerQueue({ name: 'partner-article' }),
     AuthModule, UsersModule, ProductsModule, CategoriesModule, PriceHistoryModule, DealsModule, FavoritesModule, WatchRulesModule, NotificationsModule,
     YandexAffiliateModule
   ],
