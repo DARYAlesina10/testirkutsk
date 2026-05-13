@@ -1,34 +1,35 @@
-# Honest Discount / «Честная Скидка»
+# Honest Discount / Честная Скидка
 
-Production-ready scaffold монорепозитория для сервиса мониторинга реальных скидок на Яндекс Маркете.
+Монорепозиторий сервиса мониторинга реальных скидок на Яндекс Маркете.
 
 ## Структура
-- `apps/web` — Next.js (сайт, ЛК, админка)
-- `apps/api` — NestJS API
-- `apps/bot` — Telegram bot на Telegraf
-- `packages/database` — Prisma scripts
-- `packages/shared` — общие типы
-- `packages/config` — конфиги
-- `prisma/schema.prisma` + `prisma/seed.ts`
-- `docker/*.Dockerfile`
-- `docker-compose.yml`
+- `apps/api` — NestJS API + интеграции + BullMQ workers
+- `apps/web` — Next.js сайт + ЛК + админка
+- `apps/bot` — Telegram бот на Telegraf
+- `packages/config`, `packages/shared`, `packages/database`
+- `prisma/schema.prisma`, `prisma/seed.ts`, `prisma/migrations/*`
+- `docker-compose.yml`, `docker/*.Dockerfile`
 
-## Технологии
-TypeScript, Next.js, NestJS, Telegraf, PostgreSQL, Prisma, Redis, BullMQ, Tailwind CSS, Docker Compose.
+## Требования
+- Node.js 20+
+- pnpm 9+
+- Docker + Docker Compose
 
-## Быстрый старт (Docker)
+## .env
+Скопируйте пример:
 ```bash
 cp .env.example .env
-docker compose up --build
 ```
 
-Сервисы:
-- Web: http://localhost:3000
-- API: http://localhost:3001
-- Postgres: localhost:5432
-- Redis: localhost:6379
+Ключевые переменные:
+- `DATABASE_URL`
+- `REDIS_URL`
+- `API_PORT`, `WEB_PORT`
+- `TELEGRAM_BOT_TOKEN`
+- `YANDEX_CONTENT_API_KEY` (optional)
+- `YANDEX_AFFILIATE_*` (clid/base/retry/timeouts)
 
-## Быстрый старт (локально)
+## Установка и локальный запуск
 ```bash
 corepack enable
 pnpm i
@@ -38,14 +39,51 @@ pnpm db:seed
 pnpm dev
 ```
 
-## Принципы
-- Проект стартует без реальных ключей Яндекса (mock-mode).
-- Все сервисы модульные и расширяемые.
-- Telegram и web используют redirect `/r/:productId` для покупки.
+## Docker запуск
+```bash
+docker compose up --build
+```
+Сервисы:
+- `postgres`
+- `redis`
+- `api`
+- `web`
+- `bot`
 
-## Минимальные API для проверки
-- `GET /products`
-- `GET /products/:id`
-- `GET /r/:productId`
-- `GET /partner/link/create?url=https://market.yandex.ru/...`
-- `POST /partner/article/create`
+## Prisma
+- Schema содержит связи, enum, Decimal и Json поля.
+- Миграции: `prisma/migrations`.
+- Seed: `pnpm db:seed`.
+
+## API (основные)
+- auth: `/auth/*`
+- products: `/products/*`
+- categories: `/categories/*`
+- deals: `/deals/*`
+- favorites: `/favorites/*`
+- watch-rules: `/watch-rules/*`
+- notifications: `/notifications/*`
+- redirect: `/r/:productId`
+- affiliate: `/partner/*`, `/orders`, `/order`, `/orders/sync`
+- admin sync: `/admin/yandex-affiliate/*`
+
+## Telegram bot
+Команды:
+- `/start`, `/help`, `/deals`, `/search`, `/watch`, `/favorites`, `/categories`, `/settings`, `/premium`
+
+Все purchase-ссылки ведут через backend redirect `/r/:productId?source=telegram&campaign=...`.
+
+## Yandex API и mock mode
+Если `YANDEX_CONTENT_API_KEY` или нужные CLID не заданы, интеграции работают в mock-режиме.
+Это позволяет запускать проект без реальных ключей.
+
+## Безопасность
+- API-ключи используются только на backend.
+- Authorization header не логируется.
+- Admin endpoints защищены guards (`AuthGuard` + `RolesGuard`).
+- Favorites/WatchRules ограничены текущим пользователем.
+
+## Production notes
+- Текущая реализация использует `DataStore` (in-memory) как scaffold для части модулей.
+- Для production заменить mock-репозитории на Prisma repositories.
+- Добавить полноценный JWT auth, e2e тесты, CI/CD и observability.
