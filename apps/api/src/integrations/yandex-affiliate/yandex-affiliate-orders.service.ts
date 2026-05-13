@@ -84,6 +84,7 @@ export class YandexAffiliateOrdersService {
       return { synced, updateStart, updateEnd };
     } catch (e: any) {
       log.status = 'FAILED'; log.error = e?.message ?? 'sync failed'; log.finishedAt = new Date();
+      if (String(log.error).includes('YANDEX_RATE_LIMITED')) this.ds.rateLimitPausedUntil = new Date(Date.now()+15*60*1000);
       return { synced: 0, error: log.error };
     }
   }
