@@ -1,1 +1,4 @@
-export default function Page(){return <div><h1>admin/settings/yandex-affiliate</h1></div>}
+export default function Page(){
+  const checks=[['Mock mode','ON'],['Auth key','не задан'],['Link CLID','не задан'],['Article CLID','не задан'],['Orders CLID','не задан'],['Последняя проверка авторизации','—'],['Последняя ошибка','—'],['Rate limit headers','—']];
+  return <div><h1 className='text-2xl font-bold mb-3'>/admin/settings/yandex-affiliate</h1><div className='grid md:grid-cols-2 gap-2 mb-4'>{checks.map(([k,v])=><div key={String(k)} className='border rounded p-3'><div className='text-xs text-slate-500'>{k}</div><div className='font-semibold'>{String(v)}</div></div>)}</div><div className='flex flex-wrap gap-2'>{['Проверить конфигурацию','Проверить авторизацию','Синхронизировать заказы','Создать тестовую партнёрскую ссылку','Создать тестовый партнёрский артикул'].map(b=><button key={b} className='border rounded px-3 py-2'>{b}</button>)}</div></div>
+}
