@@ -10,7 +10,7 @@ export class YandexAffiliateController {
   constructor(private readonly linkService: YandexAffiliateLinkService, private readonly articleService: YandexAffiliateArticleService, private readonly ordersService: YandexAffiliateOrdersService) {}
 
   @Get('/partner/link/create')
-  link(@Query() query: CreateAffiliateLinkDto) { return this.linkService.createLink(query.url, query.vid, query.erid); }
+  link(@Query() query: CreateAffiliateLinkDto) { return this.linkService.createAffiliateLink({ productId: query.vid ?? "unknown", marketUrl: query.url, source: "api", userId: "admin", campaign: query.erid }); }
 
   @Post('/partner/article/create')
   article(@Body() body: CreatePartnerArticleDto) { return this.articleService.createArticle(body, body.preserveOfferArticle === 'true', body.vid); }

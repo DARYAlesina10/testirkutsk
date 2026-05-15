@@ -22,7 +22,7 @@ export class YandexAffiliateOrdersService {
 
   private upsertOrder(order: any, rawResponse: any) {
     const existing = this.ds.affiliateOrders.find((o) => o.orderId === order.orderId);
-    const mapped = {
+    const mapped: Record<string, any> = {
       orderId: order.orderId,
       clid: order.clid ?? process.env.YANDEX_AFFILIATE_ORDERS_CLID ?? 'mock-orders-clid',
       vid: order.vid ?? null,
