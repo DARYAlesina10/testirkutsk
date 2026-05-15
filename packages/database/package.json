@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "db:generate": "prisma generate --schema ../../prisma/schema.prisma",
-    "db:migrate": "prisma migrate dev --schema ../../prisma/schema.prisma",
+    "db:generate": "PRISMA_GENERATE_SKIP_AUTOINSTALL=1 prisma generate --schema ../../prisma/schema.prisma",
+    "db:migrate": "PRISMA_GENERATE_SKIP_AUTOINSTALL=1 prisma migrate dev --schema ../../prisma/schema.prisma",
     "db:seed": "tsx ../../prisma/seed.ts"
   },
-  "dependencies": {"@prisma/client": "^5.20.0"},
-  "devDependencies": {"prisma": "^5.20.0", "tsx": "^4.19.1", "typescript": "^5.6.3"}
+  "dependencies": {
+    "@prisma/client": "^5.20.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.20.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
 }
