@@ -39,6 +39,12 @@ pnpm db:seed
 pnpm dev
 ```
 
+Дополнительно перед коммитом рекомендуется проверить проект:
+```bash
+pnpm lint
+pnpm test
+```
+
 ## Docker запуск
 ```bash
 docker compose up --build
