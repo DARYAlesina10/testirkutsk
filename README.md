@@ -62,6 +62,7 @@ docker compose up --build
 - Seed: `pnpm db:seed`.
 
 ## API (основные)
+- health: `/health`
 - auth: `/auth/*`
 - products: `/products/*`
 - categories: `/categories/*`
@@ -82,6 +83,24 @@ docker compose up --build
 ## Yandex API и mock mode
 Если `YANDEX_CONTENT_API_KEY` или нужные CLID не заданы, интеграции работают в mock-режиме.
 Это позволяет запускать проект без реальных ключей.
+
+## Как включить реальные данные
+1. Заполните `.env` реальными значениями:
+   - `DATABASE_URL` (PostgreSQL),
+   - `REDIS_URL`,
+   - `YANDEX_CONTENT_API_KEY`,
+   - `YANDEX_AFFILIATE_CLID`, `YANDEX_AFFILIATE_CLIENT_ID`, `YANDEX_AFFILIATE_BASE_URL`.
+2. Выполните миграции и генерацию клиента:
+   ```bash
+   pnpm db:generate
+   pnpm db:migrate
+   ```
+3. Замените in-memory `DataStore` на Prisma repositories для модулей `products/categories/deals/favorites/watch-rules/notifications`.
+4. Проверьте, что API отвечает:
+   - `GET /health`
+   - `GET /products`
+   - `GET /deals`
+5. После этого отключите mock seed-пути для production и используйте реальные данные из БД и интеграций.
 
 ## Безопасность
 - API-ключи используются только на backend.

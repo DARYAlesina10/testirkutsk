@@ -13,6 +13,7 @@ import { FavoritesModule } from './favorites/favorites.module';
 import { WatchRulesModule } from './watch-rules/watch-rules.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { DataStore } from './common/data.store';
+import { HealthController } from './health.controller';
 import { PriceCheckWorker } from '../workers/price-check.worker';
 import { NotificationWorker } from '../workers/notification.worker';
 import { PriceCheckScheduler } from '../workers/price-check.scheduler';
@@ -28,7 +29,7 @@ import { PriceCheckScheduler } from '../workers/price-check.scheduler';
     AuthModule, UsersModule, ProductsModule, CategoriesModule, PriceHistoryModule, DealsModule, FavoritesModule, WatchRulesModule, NotificationsModule,
     YandexAffiliateModule
   ],
-  controllers: [RedirectController],
+  controllers: [HealthController, RedirectController],
   providers: [DataStore, PriceCheckWorker, NotificationWorker, PriceCheckScheduler]
 })
 export class AppModule {}
