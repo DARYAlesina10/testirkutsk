@@ -27,6 +27,7 @@ cp .env.example .env
 - `DATABASE_URL`
 - `REDIS_URL`
 - `API_PORT`, `WEB_PORT`
+- `PRISMA_CONNECT_RETRIES`, `PRISMA_CONNECT_DELAY_MS` (optional, startup retry for DB)
 - `TELEGRAM_BOT_TOKEN`
 - `YANDEX_CONTENT_API_KEY` (optional)
 - `YANDEX_AFFILIATE_*` (clid/base/retry/timeouts)
