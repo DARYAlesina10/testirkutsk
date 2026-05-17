@@ -30,7 +30,7 @@ export class YandexAffiliateArticleService {
     const body = input.marketArticle ? { marketArticle: input.marketArticle } : { marketUrl: input.marketUrl };
 
     try {
-      const resp = await this.client.post('/partner/article/create', {
+      const resp = await this.client.post('partner/article/create', {
         clid: clid ?? 'mock-article-clid',
         vid,
         preserveOfferArticle: Boolean(input.preserveOfferArticle)

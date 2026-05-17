@@ -11,13 +11,13 @@ export class YandexAffiliateOrdersService {
   async getOrders(input: OrdersInput = {}) {
     const clid = process.env.YANDEX_AFFILIATE_ORDERS_CLID;
     const mock = !(process.env.YANDEX_CONTENT_API_KEY && clid);
-    return this.client.get('/orders', { clid: clid ?? 'mock-orders-clid', total: input.total ?? false, page: input.page ?? 1, count: input.count ?? Number(process.env.YANDEX_AFFILIATE_ORDERS_DEFAULT_COUNT ?? 100), ...input }, mock);
+    return this.client.get('orders', { clid: clid ?? 'mock-orders-clid', total: input.total ?? false, page: input.page ?? 1, count: input.count ?? Number(process.env.YANDEX_AFFILIATE_ORDERS_DEFAULT_COUNT ?? 100), ...input }, mock);
   }
 
   async getOrder(input: { orderId: string; total?: boolean }) {
     const clid = process.env.YANDEX_AFFILIATE_ORDERS_CLID;
     const mock = !(process.env.YANDEX_CONTENT_API_KEY && clid);
-    return this.client.get('/order', { clid: clid ?? 'mock-orders-clid', orderId: input.orderId, total: input.total ?? false }, mock);
+    return this.client.get('order', { clid: clid ?? 'mock-orders-clid', orderId: input.orderId, total: input.total ?? false }, mock);
   }
 
   private upsertOrder(order: any, rawResponse: any) {

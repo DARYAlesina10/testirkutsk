@@ -31,7 +31,7 @@ export class YandexAffiliateLinkService {
     const mock = !(process.env.YANDEX_CONTENT_API_KEY && clid);
 
     try {
-      const resp = await this.client.get('/partner/link/create', {
+      const resp = await this.client.get('partner/link/create', {
         url: encodedUrl,
         clid: clid ?? 'mock-link-clid',
         vid,
