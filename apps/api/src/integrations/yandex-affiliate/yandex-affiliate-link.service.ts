@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { YandexAffiliateClient } from './yandex-affiliate.client';
 import { DataStore } from '../../modules/common/data.store';
 
 @Injectable()
 export class YandexAffiliateLinkService {
+  private readonly logger = new Logger(YandexAffiliateLinkService.name);
   constructor(private readonly client: YandexAffiliateClient, private readonly ds: DataStore) {}
 
   private sanitize(value: string) { return value.replace(/[^a-zA-Z0-9]/g, ''); }
@@ -41,6 +42,11 @@ export class YandexAffiliateLinkService {
       const linkUrl = resp.data?.link?.url ?? resp.data?.url ?? encodedUrl;
       const shortUrl = resp.data?.shortUrl ?? resp.data?.link?.shortUrl ?? null;
       const selectedUrl = String(process.env.YANDEX_AFFILIATE_USE_SHORT_URL ?? 'true') === 'true' ? shortUrl || linkUrl : linkUrl;
+      const gotAffiliate = linkUrl !== encodedUrl || !!shortUrl;
+      this.logger.log(`link.create product=${input.productId} source=${input.source} mock=${mock} affiliate=${gotAffiliate} short=${!!shortUrl}`);
+      if (!gotAffiliate) {
+        this.logger.warn(`link.create returned no affiliate url, fallbacking to original product=${input.productId}`);
+      }
       const saved = {
         id: `al_${Date.now()}`,
         productId: input.productId,
@@ -59,7 +65,8 @@ export class YandexAffiliateLinkService {
       };
       this.ds.affiliateLinks.push(saved);
       return saved;
-    } catch {
+    } catch (error: any) {
+      this.logger.error(`link.create failed product=${input.productId} source=${input.source} mock=${mock} reason=${error?.message ?? 'unknown'}`);
       const fallback = {
         id: `al_${Date.now()}`,
         productId: input.productId,
