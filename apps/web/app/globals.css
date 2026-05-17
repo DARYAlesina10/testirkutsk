@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg: #f8fafc;
+  --text: #0f172a;
+}
+
+html,
+body {
+  background: radial-gradient(1200px 600px at 10% -10%, #e0f2fe 0%, transparent 45%), var(--bg);
+  color: var(--text);
+}
+
+a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+* {
+  scroll-behavior: smooth;
+}

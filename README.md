@@ -21,6 +21,8 @@
 cp .env.example .env
 ```
 
+> ⚠️ Не коммитьте реальные токены в git (`.env` должен оставаться локальным/секретным).
+
 Ключевые переменные:
 - `DATABASE_URL`
 - `REDIS_URL`
@@ -83,6 +85,19 @@ docker compose up --build
 ## Yandex API и mock mode
 Если `YANDEX_CONTENT_API_KEY` или нужные CLID не заданы, интеграции работают в mock-режиме.
 Это позволяет запускать проект без реальных ключей.
+
+### Быстро подставить реальные токены (локально на сервере)
+```bash
+cd /home/deploy/apps/honest-discount
+cp -n .env.example .env
+sed -i 's#^YANDEX_CONTENT_API_KEY=.*#YANDEX_CONTENT_API_KEY=TiabQw5zFz5GLDRtojQyzO7xbgRZZD#' .env
+sed -i 's#^TELEGRAM_BOT_TOKEN=.*#TELEGRAM_BOT_TOKEN=8996736501:AAGz2pbJoqB9OJtpwJknlHDn6EXiv0WZRTY#' .env
+```
+
+Проверка (без печати токена в консоль):
+```bash
+grep -E '^(YANDEX_CONTENT_API_KEY|TELEGRAM_BOT_TOKEN)=' .env | sed 's/=.*$/=***hidden***/'
+```
 
 ## Как включить реальные данные
 1. Заполните `.env` реальными значениями:
