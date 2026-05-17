@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ProductCard } from '../components/site/product-card';
 
 async function loadProducts() {
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://api:3001';
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://api:3001/api';
   try {
     const res = await fetch(`${base}/products`, { cache: 'no-store' });
     if (!res.ok) return [];
@@ -25,7 +25,7 @@ async function loadProducts() {
 }
 
 async function loadCategories() {
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://api:3001';
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://api:3001/api';
   try {
     const res = await fetch(`${base}/categories`, { cache: 'no-store' });
     if (!res.ok) return [];

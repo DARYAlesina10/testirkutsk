@@ -64,17 +64,17 @@ docker compose up --build
 - Seed: `pnpm db:seed`.
 
 ## API (основные)
-- health: `/health`
-- auth: `/auth/*`
-- products: `/products/*`
-- categories: `/categories/*`
-- deals: `/deals/*`
-- favorites: `/favorites/*`
-- watch-rules: `/watch-rules/*`
-- notifications: `/notifications/*`
-- redirect: `/r/:productId`
-- affiliate: `/partner/*`, `/orders`, `/order`, `/orders/sync`
-- admin sync: `/admin/yandex-affiliate/*`
+- health: `/api/health`
+- auth: `/api/auth/*`
+- products: `/api/products/*`
+- categories: `/api/categories/*`
+- deals: `/api/deals/*`
+- favorites: `/api/favorites/*`
+- watch-rules: `/api/watch-rules/*`
+- notifications: `/api/notifications/*`
+- redirect: `/api/r/:productId`
+- affiliate: `/api/partner/*`, `/api/orders`, `/api/order`, `/api/orders/sync`
+- admin sync: `/api/admin/yandex-affiliate/*`
 
 ## Telegram bot
 Команды:
@@ -112,9 +112,9 @@ grep -E '^(YANDEX_CONTENT_API_KEY|TELEGRAM_BOT_TOKEN)=' .env | sed 's/=.*$/=***h
    ```
 3. Замените in-memory `DataStore` на Prisma repositories для модулей `products/categories/deals/favorites/watch-rules/notifications`.
 4. Проверьте, что API отвечает:
-   - `GET /health`
-   - `GET /products`
-   - `GET /deals`
+   - `GET /api/health`
+   - `GET /api/products`
+   - `GET /api/deals`
 5. После этого отключите mock seed-пути для production и используйте реальные данные из БД и интеграций.
 
 ## Безопасность
