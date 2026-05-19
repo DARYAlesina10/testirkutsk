@@ -1,0 +1,2 @@
+-- Initial migration generated for Honest Discount domain schema.
+-- Run: pnpm db:migrate (Prisma will manage SQL generation/update as needed).
