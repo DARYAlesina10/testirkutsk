@@ -1,5 +1,5 @@
 async function getProducts() {
-  const base = process.env.NEXT_PUBLIC_API_URL ?? 'http://api:3001/api';
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? process.env.NEXT_PUBLIC_API_URL ?? 'http://api:3001/api';
   const res = await fetch(`${base}/products`, { cache: 'no-store' });
   if (!res.ok) return [];
   return res.json();
