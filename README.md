@@ -138,3 +138,22 @@ grep -E '^(YANDEX_CONTENT_API_KEY|TELEGRAM_BOT_TOKEN)=' .env | sed 's/=.*$/=***h
 - Текущая реализация использует `DataStore` (in-memory) как scaffold для части модулей.
 - Для production заменить mock-репозитории на Prisma repositories.
 - Добавить полноценный JWT auth, e2e тесты, CI/CD и observability.
+
+## Быстрый деплой одной командой
+Добавлен скрипт `scripts/deploy.sh`, который:
+- обновляет код из `main` или конкретного PR,
+- проверяет обязательные переменные в `.env`,
+- пересобирает и перезапускает `docker compose`,
+- проверяет API и web endpoints.
+
+Примеры:
+```bash
+# Деплой из main
+bash scripts/deploy.sh
+
+# Деплой конкретного PR (например #123)
+PR_NUMBER=123 bash scripts/deploy.sh
+
+# Кастомный хост/порты
+HOST=80.78.253.68 API_PORT=3001 WEB_PORT=3000 bash scripts/deploy.sh
+```
