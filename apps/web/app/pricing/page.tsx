@@ -1,0 +1,2 @@
+const plans=[['Free','₽0','Базовый мониторинг'],['Premium','₽299','Уведомления + избранное'],['Pro','₽699','Все функции + аналитика']];
+export default function Pricing(){return <div><h1 className='text-3xl font-bold mb-3'>Тарифы</h1><div className='grid md:grid-cols-3 gap-3'>{plans.map(([n,p,d])=><div key={String(n)} className='border rounded p-4'><h3 className='font-bold'>{n}</h3><p className='text-2xl'>{p}</p><p>{d}</p></div>)}</div></div>}
